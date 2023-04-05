@@ -433,17 +433,17 @@ void inputPhoneData(struct Phone *phone)
     switch (selection)
     {
     case 1:
-        assignStringValue(phone->description, "CELL");
+        phone->description = "CELL";
         break;
     case 2:
-        assignStringValue(phone->description, "HOME");
+        phone->description = "HOME";
         break;
     case 3:
-        assignStringValue(phone->description, "WORK");
+        phone->description = "WORK";
         break;
     case 4:
         *phone->number = '\0';
-        assignStringValue(phone->description, "TBD");
+        phone->description="TBD";
         break;
     }
 
@@ -451,34 +451,4 @@ void inputPhoneData(struct Phone *phone)
         printf("Number: ");
         inputCString(phone->number, PHONE_LEN, PHONE_LEN);
     }
-}
-
-// UTILITIES
-int compareString(const char *str1, const char *str2)
-{
-    int i = 0, len;
-    if (str1 == NULL || str1 == 0)
-        return 0;
-
-    printf("%c, %c\n", str1[1], str2[1]);
-
-
-    for (len = 0; str1[len] != '\0'; len++)
-    {
-        if (str1[len] == str2[len])
-        {
-            i += 1;
-        }
-    }
-
-    return i == len ? 1 : 0;
-}
-
-void assignStringValue(char* source, char* value) {
-    int i;
-
-    for(i=0; value[i] != '\0'; i++) {
-        source[i] = value[i];
-    }
-    source[i] = '\0';
 }

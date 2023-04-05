@@ -40,7 +40,7 @@ piece of work is entirely of my own creation.
 
 // Data type: Phone
 struct Phone {
-    char description[PHONE_DESC_LEN];
+    char* description;
     char number[PHONE_LEN];
 };
 
@@ -110,9 +110,6 @@ void removePatient(struct Patient patient[], int max);
 //////////////////////////////////////
 // UTILITY FUNCTIONS
 //////////////////////////////////////
-
-// added for assigning the phone description
-void assignStringValue(char* source, char* value);
 
 // Search and display patient record by patient number (form)
 void searchPatientByPatientNumber(const struct Patient patient[], int max);
