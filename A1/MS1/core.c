@@ -1,5 +1,5 @@
 /******************************************************************************
-Assignment 1 - Milestone 2
+Assignment 1 - Milestone 1
 Full Name  : Alisha Basnet
 Student ID#: 161963210
 Email      : abasnet9@myseneca.ca

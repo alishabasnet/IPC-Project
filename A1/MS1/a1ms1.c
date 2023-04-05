@@ -1,12 +1,11 @@
-
 // Copy the below commented "header" section to all your source code files!
 
 /*/////////////////////////////////////////////////////////////////////////
-                        Assignment 1 - Milestone 1
-Full Name  :
-Student ID#:
-Email      :
-Section    :
+Assignment 1 - Milestone 1
+Full Name  : Alisha Basnet
+Student ID#: 161963210
+Email      : abasnet9@myseneca.ca
+Section    : NCC
 
 Authenticity Declaration:
 I declare this submission is the result of my own work and has not been
