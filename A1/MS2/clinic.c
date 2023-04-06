@@ -431,6 +431,7 @@ void inputPhoneData(struct Phone *phone)
     printf("4. TBD\n");
     printf("Selection: ");
     selection = inputIntRange(1, 4);
+    putchar('\n');
 
     switch (selection)
     {
