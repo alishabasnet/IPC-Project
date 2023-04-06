@@ -208,7 +208,7 @@ void searchPatientData(const struct Patient patient[], int max)
     int selection;
     do
     {
-        printf("Patient Management\n"
+        printf("Search Option\n"
                "=========================\n"
                "1) By patient number\n"
                "2) By phone number\n"
