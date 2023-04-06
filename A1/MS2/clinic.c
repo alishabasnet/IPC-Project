@@ -297,8 +297,7 @@ void removePatient(struct Patient patient[], int max)
     else
     {   
 
-        displayPatientData(patient[index], FMT_FORM);
-
+        displayPatientData(&patient[index], FMT_FORM);
         printf("\nAre you sure you want to remove this patient record? (y/n): ");
         selection = inputCharOption("yn");
 
