@@ -258,7 +258,8 @@ void editPatient(struct Patient patient[], int max)
     int index, patientNumber;
 
     printf("Enter the patient number: ");
-    scanf("%d", &patientNumber);    
+    scanf("%d", &patientNumber);
+    putchar('\n');
 
     index = findPatientIndexByPatientNum(patientNumber, patient, max);
 
