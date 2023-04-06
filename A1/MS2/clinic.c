@@ -450,7 +450,8 @@ void inputPhoneData(struct Phone *phone)
     }
 
     if(selection != 4) {
-        printf("Number: ");
+        printf("Contact: %s", phone->description);
+        printf("Number : ");
         inputCString(phone->number, PHONE_LEN, PHONE_LEN);
     }
 }
