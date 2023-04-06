@@ -424,7 +424,7 @@ void inputPhoneData(struct Phone *phone)
 {
     int selection;
     printf("\nPhone Information\n");
-    printf("------------------\n");
+    printf("-----------------\n");
     printf("How will the patient like to be contacted?\n");
     printf("1. Cell\n");
     printf("2. Home\n");
