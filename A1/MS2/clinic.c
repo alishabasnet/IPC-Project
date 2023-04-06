@@ -208,7 +208,7 @@ void searchPatientData(const struct Patient patient[], int max)
     int selection;
     do
     {
-        printf("Search Option\n"
+        printf("Search Options\n"
                "=========================\n"
                "1) By patient number\n"
                "2) By phone number\n"
@@ -247,7 +247,7 @@ void addPatient(struct Patient patient[], int max)
     } else {
         inputPatient(&p);
         patient[idx] = p;
-        printf("\n*** New patient record added ***\n\n");
+        printf("*** New patient record added ***\n\n");
     }
 }
 
@@ -291,7 +291,7 @@ void removePatient(struct Patient patient[], int max)
 
     if (index == -1)
     {
-        printf("\nERROR: Patient record not found!\n\n");
+        printf("ERROR: Patient record not found!\n\n");
         getchar();
     }
     else
@@ -330,7 +330,7 @@ void searchPatientByPatientNumber(const struct Patient patient[], int max)
 
     if (index == -1)
     {
-        printf("\n*** No records found ***\n\n");
+        printf("*** No records found ***\n\n");
     }
     else
     {
@@ -423,7 +423,7 @@ void inputPatient(struct Patient *patient)
 void inputPhoneData(struct Phone *phone)
 {
     int selection;
-    printf("\nPhone Information");
+    printf("\nPhone Information\n");
     printf("------------------\n");
     printf("How will the patient like to be contacted?\n");
     printf("1. Cell\n");
@@ -452,7 +452,7 @@ void inputPhoneData(struct Phone *phone)
     }
 
     if(selection != 4) {
-        printf("Contact: %s", phone->description);
+        printf("Contact: %s\n", phone->description);
         printf("Number : ");
         inputCString(phone->number, PHONE_LEN, PHONE_LEN);
     }
