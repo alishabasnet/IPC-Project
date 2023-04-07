@@ -1,455 +1,525 @@
-/******************************************************************************
-Assignment 1 - Milestone 2
-Full Name  : Alisha Basnet
-Student ID#: 161963210
-Email      : abasnet9@myseneca.ca
-Section    : NCC
+// ############################################################################
+//
+//  Assignment:  1 
+//  Milestone:   2
+//  Description: Main Application Entry Point
+//
+// +---------------------------------------------------------+
+// | *** The contents of this file is NOT to be modified *** |    
+// +---------------------------------------------------------+
+//
+// ############################################################################
 
-Authenticity Declaration:
-I declare this submission is the result of my own work and has not been
-shared with any other student or 3rd party content provider. This submitted
-piece of work is entirely of my own creation.
-******************************************************************************/
-
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 
-// include the user library "core" so we can use those functions
-#include "core.h"
-// include the user library "clinic" where the function prototypes are declared
+// include the user library "clinic" where the data types are declared
 #include "clinic.h"
 
-//////////////////////////////////////
-// DISPLAY FUNCTIONS
-//////////////////////////////////////
+#define MAX_PETS 7
 
-// !!! DO NOT MODIFY THIS FUNCTION DEFINITION !!!
-// Display's the patient table header (table format)
-void displayPatientTableHeader(void)
+int main(void)
 {
-    printf("Pat.# Name            Phone#\n"
-           "----- --------------- --------------------\n");
+    struct Patient pets[MAX_PETS] = { 
+        {1024, "Shaggy Yanson", {"CELL","3048005191"} },
+        {1032, "Puglsey Yanson", {"CELL","3048005191"} },
+        {1040, "Beans Maulin", {"HOME","3649155831"} },
+        {1048, "Banjo Codi", {"TBA",{'\0'}} },
+        {1056, "Rover Davidov", {"WORK","7934346809"} }
+    };
+    struct ClinicData data = { pets, MAX_PETS};
+
+    // Entry point to the application logic:
+    menuMain(&data);
+
+    return 0;
 }
 
-// !!! DO NOT MODIFY THIS FUNCTION DEFINITION !!!
-// Displays a single patient record in FMT_FORM | FMT_TABLE format
-void displayPatientData(const struct Patient *patient, int fmt)
-{
-    if (fmt == FMT_FORM)
-    {
-        printf("Name  : %s\n"
-               "Number: %05d\n"
-               "Phone : ",
-               patient->name, patient->patientNumber);
-        displayFormattedPhone(patient->phone.number);
-        printf(" (%s)\n", patient->phone.description);
-    }
-    else
-    {
-        printf("%05d %-15s ", patient->patientNumber,
-               patient->name);
-        displayFormattedPhone(patient->phone.number);
-        printf(" (%s)\n", patient->phone.description);
-    }
-}
 
-//////////////////////////////////////
-// MENU & ITEM SELECTION FUNCTIONS
-//////////////////////////////////////
+/*  INPUTS:
 
-// !!! DO NOT MODIFY THIS FUNCTION DEFINITION !!!
-// main menu
-void menuMain(struct ClinicData *data)
-{
-    int selection;
+2
+1
+1
 
-    do
-    {
-        printf("Veterinary Clinic System\n"
-               "=========================\n"
-               "1) PATIENT     Management\n"
-               "2) APPOINTMENT Management\n"
-               "-------------------------\n"
-               "0) Exit System\n"
-               "-------------------------\n"
-               "Selection: ");
-        selection = inputIntRange(0, 2);
-        putchar('\n');
-        switch (selection)
-        {
-        case 0:
-            printf("Are you sure you want to exit? (y|n): ");
-            selection = !(inputCharOption("yn") == 'y');
-            putchar('\n');
-            if (!selection)
-            {
-                printf("Exiting system... Goodbye.\n\n");
-            }
-            break;
-        case 1:
-            menuPatient(data->patients, data->maxPatient);
-            break;
-        case 2:
-            printf("<<< Feature not yet available >>>\n\n");
-            break;
-        }
-    } while (selection);
-}
+2
+1
 
-// !!! DO NOT MODIFY THIS FUNCTION DEFINITION !!!
-// Menu: Patient Management
-void menuPatient(struct Patient patient[], int max)
-{
-    int selection;
+2
+3048005191
 
-    do
-    {
-        printf("Patient Management\n"
-               "=========================\n"
-               "1) VIEW   Patient Data\n"
-               "2) SEARCH Patients\n"
-               "3) ADD    Patient\n"
-               "4) EDIT   Patient\n"
-               "5) REMOVE Patient\n"
-               "-------------------------\n"
-               "0) Previous menu\n"
-               "-------------------------\n"
-               "Selection: ");
-        selection = inputIntRange(0, 5);
-        putchar('\n');
-        switch (selection)
-        {
-        case 1:
-            displayAllPatients(patient, max, FMT_TABLE);
-            suspend();
-            break;
-        case 2:
-            searchPatientData(patient, max);
-            break;
-        case 3:
-            addPatient(patient, max);
-            suspend();
-            break;
-        case 4:
-            editPatient(patient, max);
-            break;
-        case 5:
-            removePatient(patient, max);
-            suspend();
-            break;
-        }
-    } while (selection);
-}
+2
+7934346809
 
-// !!! DO NOT MODIFY THIS FUNCTION DEFINITION !!!
-// Menu: Patient edit
-void menuPatientEdit(struct Patient *patient)
-{
-    int selection;
+1
+9
 
-    do
-    {
-        printf("Edit Patient (%05d)\n"
-               "=========================\n"
-               "1) NAME : %s\n"
-               "2) PHONE: ",
-               patient->patientNumber, patient->name);
+2
+1234567890
 
-        displayFormattedPhone(patient->phone.number);
+0
+3
+Horsey Henry
+4
 
-        printf("\n"
-               "-------------------------\n"
-               "0) Previous menu\n"
-               "-------------------------\n"
-               "Selection: ");
-        selection = inputIntRange(0, 2);
-        putchar('\n');
+3
+Turkey Time
+2
+9994133132
 
-        if (selection == 1)
-        {
-            printf("Name  : ");
-            inputCString(patient->name, 1, NAME_LEN);
-            printf("\nPatient record updated!\n\n");
-        }
-        else if (selection == 2)
-        {
-            inputPhoneData(&patient->phone);
-            printf("\nPatient record updated!\n\n");
-        }
+3
 
-    } while (selection);
-}
+4
+1048
+1
+Guitar Codi
+2
+3
+7774115123
+0
+1
 
-// ---------------------------------------------------------------------------
-// !!! Put all the remaining function definitions below !!!
-// Note: Maintain the same order/sequence as it is listed in the header file
-// ---------------------------------------------------------------------------
+5
+1111
 
-// Display's all patient data in the FMT_FORM | FMT_TABLE format
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void displayAllPatients(const struct Patient patient[], int max, int fmt)
-{
-    int i;
-    displayPatientTableHeader();
-    for (i = 0; i<max; i++)
-    {
-        if(patient[i].patientNumber != 0) {
-            displayPatientData(&patient[i], FMT_TABLE);
-        }
-    }
-    putchar('\n');
-}
+5
+1040
+n
 
-// Search for a patient record based on patient number or phone number
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void searchPatientData(const struct Patient patient[], int max)
-{
-    int selection;
-    do
-    {
-        printf("Search Options\n"
-               "========================\n"
-               "1) By patient number\n"
-               "2) By phone number\n"
-               "-------------------------\n"
-               "0) Previous menu\n"
-               "-------------------------\n"
-               "Selection: ");
-        selection = inputIntRange(0, 2);
-        putchar('\n');
+5
+1056
+y
 
-        switch (selection)
-        {
-        case 1:
-            searchPatientByPatientNumber(patient, max);
-            suspend();
-            break;
-        case 2:
-            searchPatientByPhoneNumber(patient, max);
-            suspend();
-            break;
-        }
+1
 
-    } while (selection);
-}
+0
+0
+y
 
-// Add a new patient record to the patient array
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void addPatient(struct Patient patient[], int max)
-{
-    struct Patient p;
-    int idx = nextPatientNumber(patient, max);
+*/
 
-    if(idx >= max) {
-        printf("ERROR: Patient listing is FULL!\n\n");
-    } else {
-        inputPatient(&p);
-        patient[idx] = p;
-        printf("\n*** New patient record added ***\n\n");
-    }
-}
+/* SAMPLE OUTPUT
 
-// Edit a patient record from the patient array
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void editPatient(struct Patient patient[], int max)
-{
-    int index, patientNumber;
+Veterinary Clinic System
+=========================
+1) PATIENT     Management
+2) APPOINTMENT Management
+-------------------------
+0) Exit System
+-------------------------
+Selection: 2
 
-    printf("Enter the patient number: ");
-    patientNumber = inputInt();
-    putchar('\n');
+<<< Feature not yet available >>>
 
-    index = findPatientIndexByPatientNum(patientNumber, patient, max);
+Veterinary Clinic System
+=========================
+1) PATIENT     Management
+2) APPOINTMENT Management
+-------------------------
+0) Exit System
+-------------------------
+Selection: 1
 
-    if (index == -1)
-    {
-        printf("ERROR: Patient record not found!\n\n");
-        suspend();
-    }
-    else
-    {
-        menuPatientEdit(&patient[index]);
-    }
-}
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 1
 
-// Remove a patient record from the patient array
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void removePatient(struct Patient patient[], int max)
-{
-    char selection;
-    int index, patientNumber;
-    struct Patient p = { 0 };
+Pat.# Name            Phone#
+----- --------------- --------------------
+01024 Shaggy Yanson   (304)800-5191 (CELL)
+01032 Puglsey Yanson  (304)800-5191 (CELL)
+01040 Beans Maulin    (364)915-5831 (HOME)
+01048 Banjo Codi      (___)___-____ (TBA)
+01056 Rover Davidov   (793)434-6809 (WORK)
 
-    printf("Enter the patient number: ");
-    patientNumber = inputInt();
-    putchar('\n');
+<ENTER> to continue...
 
-    index = findPatientIndexByPatientNum(patientNumber, patient, max);
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 2
 
-    if (index == -1)
-    {
-        printf("ERROR: Patient record not found!\n\n");
-    }
-    else
-    {   
-        displayPatientData(&patient[index], FMT_FORM);
-        printf("\nAre you sure you want to remove this patient record? (y/n): ");
-        selection = inputCharOption("yn");
-        putchar('\n');
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 1
 
-        if (selection == 'y')
-        {
-            patient[index] = p;
-            printf("Patient record has been removed!\n\n");
-        }
-        else
-        {
-            printf("Operation aborted.\n\n");
-        }
-    }
-}
+Search by patient number: 1040
 
-//////////////////////////////////////
-// UTILITY FUNCTIONS
-//////////////////////////////////////
+Name  : Beans Maulin
+Number: 01040
+Phone : (364)915-5831 (HOME)
 
-// Search and display patient record by patient number (form)
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void searchPatientByPatientNumber(const struct Patient patient[], int max)
-{
-    int index, patientNumber;
-    printf("Search by patient number: ");
-    patientNumber = inputInt();
-    putchar('\n');
+<ENTER> to continue...
 
-    index = findPatientIndexByPatientNum(patientNumber, patient, max);
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 2
 
-    if (index == -1)
-    {
-        printf("*** No records found ***\n\n");
-    }
-    else
-    {
-        displayPatientData(&patient[index], FMT_FORM);
-        putchar('\n');
-    }
-}
+Search by phone number: 3048005191
 
-// Search and display patient records by phone number (tabular)
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void searchPatientByPhoneNumber(const struct Patient patient[], int max)
-{
-    int i = 0, j=0, k=0;
-    char phoneNumber[PHONE_LEN];
-    printf("Search by phone number: ");
-    inputCString(phoneNumber, 1, PHONE_LEN);
-    putchar('\n');
+Pat.# Name            Phone#
+----- --------------- --------------------
+01024 Shaggy Yanson   (304)800-5191 (CELL)
+01032 Puglsey Yanson  (304)800-5191 (CELL)
 
-    displayPatientTableHeader();
-    for(i=0;i<max;i++)
-    {
-        for(j=0; j<PHONE_LEN; j++) {
-            if(patient[i].phone.number[j] != phoneNumber[j]) {
-                break;
-            }
-        }
+<ENTER> to continue...
 
-        if(j == PHONE_LEN) {
-            k+=1;
-            displayPatientData(&patient[i], FMT_TABLE);
-        }
-        
-    }
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 2
 
-    putchar('\n');
-    if(k==0) {
-        printf("*** No records found ***\n\n");
-    }
-}
+Search by phone number: 7934346809
 
-// Get the next highest patient number
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-int nextPatientNumber(const struct Patient patient[], int max) {
-    int i;
-    for(i=0; i<max; i++) {
-        if(patient[i].patientNumber == 0) {
-            break;
-        }
-    }
-    return i;
-}
+Pat.# Name            Phone#
+----- --------------- --------------------
+01056 Rover Davidov   (793)434-6809 (WORK)
 
-// Find the patient array index by patient number (returns -1 if not found)
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-int findPatientIndexByPatientNum(int patientNumber, const struct Patient patient[], int max)
-{
-    int i = 0, index = -1;    
-    for (i = 0; i<max; i++)
-    {
-        if (patient[i].patientNumber == patientNumber && patientNumber != 0)
-        {
-            index = i;
-            break;
-        }
-    }
-    return index;
-}
+<ENTER> to continue...
 
-//////////////////////////////////////
-// USER INPUT FUNCTIONS
-//////////////////////////////////////
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 1
 
-// Get user input for a new patient record
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void inputPatient(struct Patient *patient)
-{
-    printf("Patient Data Input\n");
-    printf("------------------\n");
-    printf("Number: ");
-    patient->patientNumber = inputInt();
-    printf("Name  : ");
-    inputCString(patient->name, 1, NAME_LEN);
-    putchar('\n');
-    inputPhoneData(&patient->phone);
-}
+Search by patient number: 9
 
-// Get user input for phone contact information
-// (ToDo: PUT THE FUNCTION DEFINITION BELOW)
-void inputPhoneData(struct Phone *phone)
-{
-    int selection;
-    printf("Phone Information\n");
-    printf("-----------------\n");
-    printf("How will the patient like to be contacted?\n");
-    printf("1. Cell\n");
-    printf("2. Home\n");
-    printf("3. Work\n");
-    printf("4. TBD\n");
-    printf("Selection: ");
-    selection = inputIntRange(1, 4);
+*** No records found ***
 
-    switch (selection)
-    {
-    case 1:
-        phone->description = "CELL";
-        break;
-    case 2:
-        phone->description = "HOME";
-        break;
-    case 3:
-        phone->description = "WORK";
-        break;
-    case 4:
-        *phone->number = '\0';
-        phone->description="TBD";
-        break;
-    }
+<ENTER> to continue...
 
-    if(selection != 4) {
-        printf("\nContact: %s\n", phone->description);
-        printf("Number : ");
-        inputCString(phone->number, PHONE_LEN, PHONE_LEN);
-        // putchar('\n');
-    }
-}
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 2
+
+Search by phone number: 1234567890
+
+Pat.# Name            Phone#
+----- --------------- --------------------
+
+*** No records found ***
+
+<ENTER> to continue...
+
+Search Options
+==========================
+1) By patient number
+2) By phone number
+..........................
+0) Previous menu
+..........................
+Selection: 0
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 3
+
+Patient Data Input
+------------------
+Number: 01057
+Name  : Horse Henry
+
+Phone Information
+-----------------
+How will the patient like to be contacted?
+1. Cell
+2. Home
+3. Work
+4. TBD
+Selection: 4
+
+*** New patient record added ***
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 3
+
+Patient Data Input
+------------------
+Number: 01058
+Name  : Turkey Time
+
+Phone Information
+-----------------
+How will the patient like to be contacted?
+1. Cell
+2. Home
+3. Work
+4. TBD
+Selection: 2
+
+Contact: HOME
+Number : 9994133132
+
+*** New patient record added ***
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 3
+
+ERROR: Patient listing is FULL!
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 4
+
+Enter the patient number: 1048
+
+Edit Patient (01048)
+=========================
+1) NAME : Banjo Codi
+2) PHONE: (___)___-____
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 1
+
+Name  : Guitar Codi
+
+Patient record updated!
+
+Edit Patient (01048)
+=========================
+1) NAME : Guitar Codi
+2) PHONE: (___)___-____
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 2
+
+Phone Information
+-----------------
+How will the patient like to be contacted?
+1. Cell
+2. Home
+3. Work
+4. TBD
+Selection: 3
+
+Contact: WORK
+Number : 7774115123
+
+Patient record updated!
+
+Edit Patient (01048)
+=========================
+1) NAME : Guitar Codi
+2) PHONE: (777)411-5123
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 0
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 1
+
+Pat.# Name            Phone#
+----- --------------- --------------------
+01024 Shaggy Yanson   (304)800-5191 (CELL)
+01032 Puglsey Yanson  (304)800-5191 (CELL)
+01040 Beans Maulin    (364)915-5831 (HOME)
+01048 Guitar Codi     (777)411-5123 (WORK)
+01056 Rover Davidov   (793)434-6809 (WORK)
+01057 Horse Henry     (___)___-____ (TBD)
+01058 Turkey Time     (999)413-3132 (HOME)
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 5
+
+Enter the patient number: 1111
+
+ERROR: Patient record not found!
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 5
+
+Enter the patient number: 1040
+
+Name  : Beans Maulin
+Number: 01040
+Phone : (364)915-5831 (HOME)
+
+Are you sure you want to remove this patient record? (y/n): n
+Operation aborted.
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 5
+
+Enter the patient number: 1056
+
+Name  : Rover Davidov
+Number: 01056
+Phone : (793)434-6809 (WORK)
+
+Are you sure you want to remove this patient record? (y/n): y
+Patient record has been removed!
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 1
+
+Pat.# Name            Phone#
+----- --------------- --------------------
+01024 Shaggy Yanson   (304)800-5191 (CELL)
+01032 Puglsey Yanson  (304)800-5191 (CELL)
+01040 Beans Maulin    (364)915-5831 (HOME)
+01048 Guitar Codi     (777)411-5123 (WORK)
+01057 Horse Henry     (___)___-____ (TBD)
+01058 Turkey Time     (999)413-3132 (HOME)
+
+<ENTER> to continue...
+
+Patient Management
+=========================
+1) VIEW   Patient Data
+2) SEARCH Patients
+3) ADD    Patient
+4) EDIT   Patient
+5) REMOVE Patient
+-------------------------
+0) Previous menu
+-------------------------
+Selection: 0
+
+Veterinary Clinic System
+=========================
+1) PATIENT     Management
+2) APPOINTMENT Management
+-------------------------
+0) Exit System
+-------------------------
+Selection: 0
+
+Are you sure you want to exit? (y|n): y
+
+Exiting system... Goodbye.
+
+*/ 
