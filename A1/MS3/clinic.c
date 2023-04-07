@@ -398,11 +398,75 @@ void viewAppointmentSchedule(struct ClinicData *data) {
 
 // Add an appointment record to the appointment array
 void addAppointment(struct Appointment *appoint, int maxAppointments,
-                    struct Patient *patient, int maxPatients) {}
+                    struct Patient *patient, int maxPatients) {
+
+  struct Date date;
+  struct Time time;
+
+  int patientNumber, index;
+
+  printf("Patient Number: ");
+  patientNumber = inputInt();
+
+  index = findPatientIndexByPatientNum(patientNumber, patient, maxPatients);
+
+  if(index == -1) {
+    printf("ERROR: Patient record not found!\n\n");
+    return;
+  }
+
+  printf("Year        : ");
+  date.year = inputInt();
+  printf("Month (1-12): ");
+  date.month = inputIntRange(1, 12);
+  printf("Day (1-28)  : ");
+  date.day = inputIntRange(1, 28);
+
+  printf("Hour (0-23)   : ");
+  time.hour = inputIntRange(0, 23);
+  printf("Minute (0-59 ): ");
+  time.min = inputIntRange(0, 59);
+
+}
 
 // Remove an appointment record from the appointment array
 void removeAppointment(struct Appointment *appoint, int maxAppointments,
-                       struct Patient *patient, int maxPatients) {}
+                       struct Patient *patient, int maxPatients) {
+  char selection;
+  struct Date date;
+  struct Appointment a = {0};
+  int patientNumber, index, i;
+  printf("Patient Number: ");
+  patientNumber = inputInt();
+
+  index = findPatientIndexByPatientNum(patientNumber, patient, maxPatients);
+  if (index == -1) {
+    printf("ERROR: Patient record not found!\n\n");
+  } else {
+    printf("Year        : ");
+    date.year = inputInt();
+    printf("Month (1-12): ");
+    date.month = inputIntRange(1, 12);
+    printf("Day (1-28)  : ");
+    date.day = inputIntRange(1, 28);
+    putchar('\n');    
+
+    for(i=0; i<maxAppointments;i++) {
+      if(appoint[i].date.year == date.year && appoint[i].date.month == date.month && appoint[i].date.day == date.day) {
+        displayPatientData(&patient[index], FMT_FORM);
+        printf("Are you sure you want to remove this appointment (y,n): ");
+        selection = inputCharOption("yn");
+        if(selection=='y') {
+          appoint[i] = a;
+          printf("\nAppointment record has been removed!\n\n");
+        } else {
+          printf("Operation aborted.\n\n");
+        }
+        break;
+      }
+    }
+  }
+}
 
 //////////////////////////////////////
 // UTILITY FUNCTIONS
