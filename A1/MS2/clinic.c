@@ -246,7 +246,7 @@ void addPatient(struct Patient patient[], int max)
     } else {
         inputPatient(&p);
         patient[idx] = p;
-        printf("*** New patient record added ***\n\n");
+        printf("\n*** New patient record added ***\n\n");
     }
 }
 
@@ -257,14 +257,14 @@ void editPatient(struct Patient patient[], int max)
     int index, patientNumber;
 
     printf("Enter the patient number: ");
-    scanf("%d", &patientNumber);
+    patientNumber = inputInt();
     putchar('\n');
 
     index = findPatientIndexByPatientNum(patientNumber, patient, max);
 
     if (index == -1)
     {
-        printf("\nERROR: Patient record not found!\n\n");
+        printf("ERROR: Patient record not found!\n\n");
         suspend();
     }
     else
@@ -410,6 +410,7 @@ void inputPatient(struct Patient *patient)
     patient->patientNumber = inputInt();
     printf("Name  : ");
     inputCString(patient->name, 1, NAME_LEN);
+    putchar('\n');
     inputPhoneData(&patient->phone);
 }
 
@@ -446,8 +447,9 @@ void inputPhoneData(struct Phone *phone)
     }
 
     if(selection != 4) {
-        printf("Contact: %s\n", phone->description);
+        printf("\nContact: %s\n", phone->description);
         printf("Number : ");
         inputCString(phone->number, PHONE_LEN, PHONE_LEN);
+        // putchar('\n');
     }
 }
