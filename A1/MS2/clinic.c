@@ -296,8 +296,6 @@ void removePatient(struct Patient patient[], int max)
         displayPatientData(&patient[index], FMT_FORM);
         printf("\nAre you sure you want to remove this patient record? (y/n): ");
         selection = inputCharOption("yn");
-        putchar('\n');
-
         if (selection == 'y')
         {
             patient[index] = p;
