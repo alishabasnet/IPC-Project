@@ -209,7 +209,7 @@ void searchPatientData(const struct Patient patient[], int max)
     do
     {
         printf("Search Options\n"
-               "========================\n"
+               "======================\n"
                "1) By patient number\n"
                "2) By phone number\n"
                "-------------------------\n"
