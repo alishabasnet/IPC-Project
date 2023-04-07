@@ -347,6 +347,7 @@ void searchPatientByPhoneNumber(const struct Patient patient[], int max)
     char phoneNumber[PHONE_LEN];
     printf("Search by phone number: ");
     scanf("%s", phoneNumber);
+    putchar('\n');
 
     displayPatientTableHeader();
     for(i=0;i<max;i++)
