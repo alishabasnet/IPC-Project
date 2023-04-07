@@ -209,7 +209,7 @@ void searchPatientData(const struct Patient patient[], int max)
     do
     {
         printf("Search Options\n"
-               "======================\n"
+               "==========================\n"
                "1) By patient number\n"
                "2) By phone number\n"
                "..........................\n"
@@ -292,10 +292,12 @@ void removePatient(struct Patient patient[], int max)
         printf("ERROR: Patient record not found!\n\n");
     }
     else
-    {   
+    {
         displayPatientData(&patient[index], FMT_FORM);
         printf("\nAre you sure you want to remove this patient record? (y/n): ");
         selection = inputCharOption("yn");
+        
+
         if (selection == 'y')
         {
             patient[index] = p;
@@ -382,7 +384,7 @@ int nextPatientNumber(const struct Patient patient[], int max) {
 // (ToDo: PUT THE FUNCTION DEFINITION BELOW)
 int findPatientIndexByPatientNum(int patientNumber, const struct Patient patient[], int max)
 {
-    int i = 0, index = -1;    
+    int i = 0, index = -1;
     for (i = 0; i<max; i++)
     {
         if (patient[i].patientNumber == patientNumber && patientNumber != 0)
