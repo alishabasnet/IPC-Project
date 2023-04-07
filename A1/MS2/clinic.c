@@ -212,9 +212,9 @@ void searchPatientData(const struct Patient patient[], int max)
                "======================\n"
                "1) By patient number\n"
                "2) By phone number\n"
-               "-------------------------\n"
+               "..........................\n"
                "0) Previous menu\n"
-               "-------------------------\n"
+               "..........................\n"
                "Selection: ");
         selection = inputIntRange(0, 2);
         putchar('\n');
