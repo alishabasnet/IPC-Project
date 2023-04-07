@@ -1,15 +1,15 @@
-/*/////////////////////////////////////////////////////////////////////////
-                        Assignment 1 - Milestone 3
-Full Name  :
-Student ID#:
-Email      :
-Section    :
+/******************************************************************************
+Assignment 1 - Milestone 3
+Full Name  : Alisha Basnet
+Student ID#: 161963210
+Email      : abasnet9@myseneca.ca
+Section    : NCC
 
 Authenticity Declaration:
 I declare this submission is the result of my own work and has not been
 shared with any other student or 3rd party content provider. This submitted
 piece of work is entirely of my own creation.
-/////////////////////////////////////////////////////////////////////////*/
+******************************************************************************/
 
 // SAFE-GUARD: 
 // It is good practice to apply safe-guards to header files
@@ -22,7 +22,7 @@ piece of work is entirely of my own creation.
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // 
-// Copy your work done from Milestone #2 (core.h) into this file
+// Copy your work done from Milestone #1 (core.h) into this file
 // 
 // NOTE:
 // - Organize your functions into the below categories
@@ -44,9 +44,29 @@ void clearInputBuffer(void);
 void suspend(void);
 
 
+
+
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
+int inputInt();
+
+int inputIntPositive();
+
+int inputIntRange(int lower, int upper);
+
+char inputCharOption(const char valid[]);
+
+void inputCString(char * str, int min, int max);
+
+void displayFormattedPhone(const char * str);
+
+
+
+
+
+
+
 
 
 

@@ -1,15 +1,15 @@
-/*/////////////////////////////////////////////////////////////////////////
-                        Assignment 1 - Milestone 3
-Full Name  :
-Student ID#:
-Email      :
-Section    :
+/******************************************************************************
+Assignment 1 - Milestone 3
+Full Name  : Alisha Basnet
+Student ID#: 161963210
+Email      : abasnet9@myseneca.ca
+Section    : NCC
 
 Authenticity Declaration:
 I declare this submission is the result of my own work and has not been
 shared with any other student or 3rd party content provider. This submitted
 piece of work is entirely of my own creation.
-/////////////////////////////////////////////////////////////////////////*/
+******************************************************************************/
 
 // SAFE-GUARD: 
 // It is good practice to apply safe-guards to header files
@@ -44,24 +44,42 @@ piece of work is entirely of my own creation.
 
 // Data type: Phone
 // (Copy your code from MS#2)
-
+struct Phone {
+    char* description;
+    char number[PHONE_LEN];
+};
 
 // Data type: Patient 
 // (Copy your code from MS#2)
+struct Patient {
+    int patientNumber;
+    char name[NAME_LEN];
+    struct Phone phone;
+};
 
 // ------------------- MS#3 -------------------
 
 // Data type: Time
 // ToDo:
-
+struct Time {
+    int hour;
+    int min;
+};
 
 // Data type: Date
 // ToDo:
-
+struct Date {
+    int year;
+    int month;
+    int day;
+};
 
 // Data type: Appointment
 // ToDo:
-
+struct Appointment {
+    struct Date date;
+    struct Time time;
+};
 
 
 // ClinicData type: Provided to student
@@ -132,20 +150,18 @@ void removePatient(struct Patient patient[], int max);
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 // View ALL scheduled appointments
-// Todo:
-
+void viewAllAppointments(struct ClinicData* data);
 
 // View appointment schedule for the user input date
-// Todo:
+void viewAppointmentSchedule(struct ClinicData* data);
 
 
 // Add an appointment record to the appointment array
-// Todo:
+void addAppointment(struct Appointment* appoint, int maxAppointments, struct Patient* patient, int maxPatients);
 
 
 // Remove an appointment record from the appointment array
-// Todo:
-
+void removeAppointment(struct Appointment* appoint, int maxAppointments, struct Patient* patient, int maxPatients);
 
 
 //////////////////////////////////////

@@ -198,7 +198,7 @@ void displayAllPatients(const struct Patient patient[], int max, int fmt)
             displayPatientData(&patient[i], FMT_TABLE);
         }
     }
-    printf("\n");
+    putchar('\n');
 }
 
 // Search for a patient record based on patient number or phone number
@@ -209,7 +209,7 @@ void searchPatientData(const struct Patient patient[], int max)
     do
     {
         printf("Search Options\n"
-               "=========================\n"
+               "========================\n"
                "1) By patient number\n"
                "2) By phone number\n"
                "-------------------------\n"
@@ -223,15 +223,14 @@ void searchPatientData(const struct Patient patient[], int max)
         {
         case 1:
             searchPatientByPatientNumber(patient, max);
-            getchar();
             suspend();
             break;
         case 2:
             searchPatientByPhoneNumber(patient, max);
-            getchar();
             suspend();
             break;
         }
+
     } while (selection);
 }
 
@@ -266,7 +265,6 @@ void editPatient(struct Patient patient[], int max)
     if (index == -1)
     {
         printf("\nERROR: Patient record not found!\n\n");
-        getchar();
         suspend();
     }
     else
@@ -284,22 +282,21 @@ void removePatient(struct Patient patient[], int max)
     struct Patient p = { 0 };
 
     printf("Enter the patient number: ");
-    scanf("%d", &patientNumber);
+    patientNumber = inputInt();
+    putchar('\n');
 
     index = findPatientIndexByPatientNum(patientNumber, patient, max);
-    putchar('\n');
 
     if (index == -1)
     {
         printf("ERROR: Patient record not found!\n\n");
-        getchar();
     }
     else
     {   
-
         displayPatientData(&patient[index], FMT_FORM);
         printf("\nAre you sure you want to remove this patient record? (y/n): ");
         selection = inputCharOption("yn");
+        putchar('\n');
 
         if (selection == 'y')
         {
@@ -323,7 +320,7 @@ void searchPatientByPatientNumber(const struct Patient patient[], int max)
 {
     int index, patientNumber;
     printf("Search by patient number: ");
-    scanf("%d", &patientNumber);
+    patientNumber = inputInt();
     putchar('\n');
 
     index = findPatientIndexByPatientNum(patientNumber, patient, max);
@@ -335,7 +332,7 @@ void searchPatientByPatientNumber(const struct Patient patient[], int max)
     else
     {
         displayPatientData(&patient[index], FMT_FORM);
-        printf("\n");
+        putchar('\n');
     }
 }
 
@@ -346,7 +343,7 @@ void searchPatientByPhoneNumber(const struct Patient patient[], int max)
     int i = 0, j=0, k=0;
     char phoneNumber[PHONE_LEN];
     printf("Search by phone number: ");
-    scanf("%s", phoneNumber);
+    inputCString(phoneNumber, 1, PHONE_LEN);
     putchar('\n');
 
     displayPatientTableHeader();
@@ -365,9 +362,7 @@ void searchPatientByPhoneNumber(const struct Patient patient[], int max)
         
     }
 
-
-    printf("\n");
-
+    putchar('\n');
     if(k==0) {
         printf("*** No records found ***\n\n");
     }
@@ -412,10 +407,9 @@ void inputPatient(struct Patient *patient)
     printf("Patient Data Input\n");
     printf("------------------\n");
     printf("Number: ");
-    scanf("%d", &patient->patientNumber);
+    patient->patientNumber = inputInt();
     printf("Name  : ");
-    getchar();
-    inputCString(patient->name, 0, NAME_LEN);
+    inputCString(patient->name, 1, NAME_LEN);
     inputPhoneData(&patient->phone);
 }
 
@@ -424,7 +418,7 @@ void inputPatient(struct Patient *patient)
 void inputPhoneData(struct Phone *phone)
 {
     int selection;
-    printf("\nPhone Information\n");
+    printf("Phone Information\n");
     printf("-----------------\n");
     printf("How will the patient like to be contacted?\n");
     printf("1. Cell\n");
@@ -433,7 +427,6 @@ void inputPhoneData(struct Phone *phone)
     printf("4. TBD\n");
     printf("Selection: ");
     selection = inputIntRange(1, 4);
-    putchar('\n');
 
     switch (selection)
     {
