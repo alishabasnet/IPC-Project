@@ -402,15 +402,15 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
 
   struct Date date;
   struct Time time;
-
-  int patientNumber, index;
+  struct Appointment newAppointment;
+  int patientNumber, index, i, loop=1;
 
   printf("Patient Number: ");
   patientNumber = inputInt();
 
   index = findPatientIndexByPatientNum(patientNumber, patient, maxPatients);
 
-  if(index == -1) {
+  if (index == -1) {
     printf("ERROR: Patient record not found!\n\n");
     return;
   }
@@ -422,11 +422,51 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
   printf("Day (1-28)  : ");
   date.day = inputIntRange(1, 28);
 
-  printf("Hour (0-23)   : ");
-  time.hour = inputIntRange(0, 23);
-  printf("Minute (0-59 ): ");
-  time.min = inputIntRange(0, 59);
+  while (loop) {
+    printf("Hour (0-23)   : ");
+    time.hour = inputIntRange(0, 23);
+    printf("Minute (0-59 ): ");
+    time.min = inputIntRange(0, 59);
+    putchar('\n');
 
+    if (((float)(time.hour) + (float)(time.min) / 60) <
+            APPOINTMENT_START_HOUR ||
+        ((float)(time.hour) + (float)(time.min) / 60) > APPOINTMENT_END_HOUR ||
+        time.min % APPOINTMENT_INTERVAL != 0) {
+      printf("ERROR: Time must be between %d:00 and %d:00 in %d minute "
+             "intervals.\n\n",
+             APPOINTMENT_START_HOUR, APPOINTMENT_END_HOUR,
+             APPOINTMENT_INTERVAL);
+      continue;
+    }
+
+    for (i = 0; i < maxAppointments; i++) {
+      if(appoint[i].patientNumber == 0) {
+        loop = 0;
+        break;
+      }
+
+      if (appoint[i].date.year == date.year &&
+              appoint[i].date.month == date.month &&
+              appoint[i].date.day == date.day &&
+              appoint[i].time.hour == time.hour &&
+              appoint[i].time.min == time.min) {
+        printf("ERROR: Appointment timeslot is not available!\n\n");
+        break;
+      }
+    }
+
+
+    if(loop == 0) {
+      break;
+    }
+  }
+
+  appoint[i].date = date;
+  appoint[i].time = time;
+  appoint[i].patientNumber = patientNumber;
+
+  printf("*** Appointment scheduled! ***\n\n");
 }
 
 // Remove an appointment record from the appointment array
@@ -449,14 +489,16 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
     date.month = inputIntRange(1, 12);
     printf("Day (1-28)  : ");
     date.day = inputIntRange(1, 28);
-    putchar('\n');    
+    putchar('\n');
 
-    for(i=0; i<maxAppointments;i++) {
-      if(appoint[i].date.year == date.year && appoint[i].date.month == date.month && appoint[i].date.day == date.day) {
+    for (i = 0; i < maxAppointments; i++) {
+      if (appoint[i].date.year == date.year &&
+          appoint[i].date.month == date.month &&
+          appoint[i].date.day == date.day) {
         displayPatientData(&patient[index], FMT_FORM);
         printf("Are you sure you want to remove this appointment (y,n): ");
         selection = inputCharOption("yn");
-        if(selection=='y') {
+        if (selection == 'y') {
           appoint[i] = a;
           printf("\nAppointment record has been removed!\n\n");
         } else {
