@@ -34,7 +34,9 @@ piece of work is entirely of my own creation.
 #define PHONE_LEN 10
 
 // MS#3 Additional macro's:
-// ToDo:
+#define APPOINTMENT_START_HOUR 9
+#define APPOINTMENT_END_HOUR 16
+#define APPOINTMENT_INTERVAL 15
 
 //////////////////////////////////////
 // Structures
@@ -43,8 +45,8 @@ piece of work is entirely of my own creation.
 // Data type: Phone
 // (Copy your code from MS#2)
 struct Phone {
-  char description[PHONE_DESC_LEN+1];
-  char number[PHONE_LEN+1];
+  char description[PHONE_DESC_LEN + 1];
+  char number[PHONE_LEN + 1];
 };
 
 // Data type: Patient
