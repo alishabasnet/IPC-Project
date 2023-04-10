@@ -402,7 +402,6 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
 
   struct Date date;
   struct Time time;
-  struct Appointment newAppointment;
   int patientNumber, index, i, loop=1;
 
   printf("Patient Number: ");
@@ -650,7 +649,6 @@ void inputPhoneData(struct Phone *phone) {
 int importPatients(const char *datafile, struct Patient patients[], int max) {
   FILE *fp;
   int count = 0;
-  char line[100];
 
   fp = fopen(datafile, "r");
 
@@ -678,7 +676,6 @@ int importAppointments(const char *datafile, struct Appointment appoints[],
                        int max) {
   FILE *fp;
   int count = 0;
-  struct Appointment appoint;
 
   fp = fopen(datafile, "r");
 
