@@ -419,7 +419,6 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
     time.hour = inputIntRange(0, 23);
     printf("Minute (0-59 ): ");
     time.min = inputIntRange(0, 59);
-    putchar('\n');
 
     if (((float)(time.hour) + (float)(time.min) / 60) <
             APPOINTMENT_START_HOUR ||
@@ -443,7 +442,7 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
           appoint[i].date.day == date.day &&
           appoint[i].time.hour == time.hour &&
           appoint[i].time.min == time.min) {
-        printf("ERROR: Appointment timeslot is not available!\n\n");
+        printf("\nERROR: Appointment timeslot is not available!\n\n");
         readDate = 1;
         break;
       }
@@ -458,7 +457,7 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
   appoint[i].time = time;
   appoint[i].patientNumber = patientNumber;
 
-  printf("*** Appointment scheduled! ***\n\n");
+  printf("\n*** Appointment scheduled! ***\n\n");
 }
 
 // Remove an appointment record from the appointment array
