@@ -475,12 +475,7 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
   if (index == -1) {
     printf("ERROR: Patient record not found!\n\n");
   } else {
-    printf("Year        : ");
-    date.year = inputInt();
-    printf("Month (1-12): ");
-    date.month = inputIntRange(1, 12);
-    printf("Day (1-28)  : ");
-    date.day = inputIntRange(1, 28);
+    inputDate(&date);
     putchar('\n');
 
     for (i = 0; i < maxAppointments; i++) {

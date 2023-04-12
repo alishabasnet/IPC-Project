@@ -86,20 +86,27 @@ int inputIntRange(int lower, int upper) {
 }
 
 char inputCharOption(const char valid[]) {
-  int x, exit;
-  char value;
-  for (x = 0; x == 0;) {
-    scanf(" %c", &value);
-    for (exit = 0; valid[exit] != '\0'; exit++) {
-      if (value == valid[exit]) {
-        x++;
+  int i, matched = 0;
+  char value, newline;
+
+  while (1) {
+    scanf("%c%c", &value, &newline);
+    if (newline == '\n') {
+      for (i = 0; valid[i] != '\0'; i++) {
+        if (valid[i] == value) {
+          matched = 1;
+          break;
+        }
+      }
+
+      if (matched == 0) {
+        printf("ERROR: Character must be one of [%s]: ", valid);
+        continue;
+      } else {
+        break;
       }
     }
-    if (x == 0) {
-      printf("ERROR: Character must be one of [%s]: ", valid);
-    }
   }
-  clearInputBuffer();
 
   return value;
 }
