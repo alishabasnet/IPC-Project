@@ -378,6 +378,8 @@ void viewAppointmentSchedule(struct ClinicData *data) {
   struct Date date;
 
   inputDate(&date);
+  putchar('\n');
+  
   displayScheduleTableHeader(&date, 0);
 
   for (i = 0; i < data->maxAppointments; i++) {
