@@ -14,6 +14,7 @@ piece of work is entirely of my own creation.
 #define _CRT_SECURE_NO_WARNINGS
 #include "core.h"
 #include <stdio.h>
+#include <string.h>
 
 // As demonstrated in the course notes:
 // https://intro2c.sdds.ca/D-Modularity/input-functions#clearing-the-buffer

@@ -178,7 +178,8 @@ int findPatientIndexByPatientNum(int patientNumber,
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
-
+// read phone number
+void inputPhoneNumber(char source[PHONE_LEN]);
 // read date
 void inputDate(struct Date *date);
 

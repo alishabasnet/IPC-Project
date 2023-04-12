@@ -14,6 +14,7 @@ piece of work is entirely of my own creation.
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
+#include <string.h>
 
 // include the user library "core" so we can use those functions
 #include "core.h"
@@ -524,7 +525,7 @@ void searchPatientByPhoneNumber(const struct Patient patient[], int max) {
   int i = 0, j = 0, k = 0;
   char phoneNumber[PHONE_LEN];
   printf("Search by phone number: ");
-  inputCString(phoneNumber, 1, PHONE_LEN);
+  inputPhoneNumber(phoneNumber);
   putchar('\n');
 
   displayPatientTableHeader();
@@ -576,6 +577,20 @@ int findPatientIndexByPatientNum(int patientNumber,
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
+
+// utility to read phone number
+void inputPhoneNumber(char source[PHONE_LEN]) {
+  while(1) {
+    scanf("%s", source);
+    if(strlen(source) != PHONE_LEN) {
+     printf("Invalid %d-digit number! Number: ", PHONE_LEN);
+     continue;  
+    } else {
+      break;
+    }
+  }
+  clearInputBuffer();
+}
 
 // utilities to read date
 void inputDate(struct Date *date) {
@@ -641,7 +656,7 @@ void inputPhoneData(struct Phone *phone) {
   if (selection != 4) {
     printf("\nContact: %s\n", phone->description);
     printf("Number : ");
-    inputCString(phone->number, PHONE_LEN, PHONE_LEN);
+    inputPhoneNumber(phone->number);
   }
 }
 

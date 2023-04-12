@@ -59,6 +59,5 @@ void inputCString(char *str, int min, int max);
 void displayFormattedPhone(const char *str);
 
 void assignCString(char *source, const char *value);
-
 // !!! DO NOT DELETE THE BELOW LINE !!!
 #endif // !CORE_H
