@@ -341,7 +341,7 @@ void removePatient(struct Patient patient[], int max) {
     printf("ERROR: Patient record not found!\n\n");
   } else {
     displayPatientData(&patient[index], FMT_FORM);
-    printf("\nAre you sure you want to remove this patient record? (y/n): ");
+    printf("Are you sure you want to remove this patient record? (y/n): ");
     selection = inputCharOption("yn");
 
     if (selection == 'y') {
@@ -375,14 +375,8 @@ void viewAllAppointments(struct ClinicData *data) {
 void viewAppointmentSchedule(struct ClinicData *data) {
   int i;
   struct Date date;
-  printf("Year        : ");
-  date.year = inputInt();
-  printf("Month (1-12): ");
-  date.month = inputIntRange(1, 12);
-  printf("Day (1-28)  : ");
-  date.day = inputIntRange(1, 28);
 
-  putchar('\n');
+  inputDate(&date);
   displayScheduleTableHeader(&date, 0);
 
   for (i = 0; i < data->maxAppointments; i++) {
@@ -402,7 +396,7 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
 
   struct Date date;
   struct Time time;
-  int patientNumber, index, i, loop=1;
+  int patientNumber, index, i, loop = 1, readDate = 1;
 
   printf("Patient Number: ");
   patientNumber = inputInt();
@@ -414,14 +408,13 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
     return;
   }
 
-  printf("Year        : ");
-  date.year = inputInt();
-  printf("Month (1-12): ");
-  date.month = inputIntRange(1, 12);
-  printf("Day (1-28)  : ");
-  date.day = inputIntRange(1, 28);
-
   while (loop) {
+
+    if(readDate == 1) {
+      inputDate(&date);
+      readDate = 0;
+    }
+
     printf("Hour (0-23)   : ");
     time.hour = inputIntRange(0, 23);
     printf("Minute (0-59 ): ");
@@ -440,23 +433,23 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
     }
 
     for (i = 0; i < maxAppointments; i++) {
-      if(appoint[i].patientNumber == 0) {
+      if (appoint[i].patientNumber == 0) {
         loop = 0;
         break;
       }
 
       if (appoint[i].date.year == date.year &&
-              appoint[i].date.month == date.month &&
-              appoint[i].date.day == date.day &&
-              appoint[i].time.hour == time.hour &&
-              appoint[i].time.min == time.min) {
+          appoint[i].date.month == date.month &&
+          appoint[i].date.day == date.day &&
+          appoint[i].time.hour == time.hour &&
+          appoint[i].time.min == time.min) {
         printf("ERROR: Appointment timeslot is not available!\n\n");
+        readDate = 1;
         break;
       }
     }
 
-
-    if(loop == 0) {
+    if (loop == 0) {
       break;
     }
   }
@@ -589,6 +582,24 @@ int findPatientIndexByPatientNum(int patientNumber,
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
+
+// utilities to read date
+void inputDate(struct Date *date) {
+  int maxDay = 31;
+  printf("Year        : ");
+  date->year = inputInt();
+
+  printf("Month (1-12): ");
+  date->month = inputIntRange(1, 12);
+
+  if (date->month == 2) {
+    // checking for leap year
+    maxDay = (date->year % 100) % 4 == 0 ? 29 : 28;
+  }
+
+  printf("Day (1-%d)  : ", maxDay);
+  date->day = inputIntRange(1, maxDay);
+}
 
 // Get user input for a new patient record
 // (Copy your code from MS#2)

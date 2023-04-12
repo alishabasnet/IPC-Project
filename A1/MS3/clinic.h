@@ -34,9 +34,9 @@ piece of work is entirely of my own creation.
 #define PHONE_LEN 10
 
 // MS#3 Additional macro's:
-#define APPOINTMENT_START_HOUR 9
-#define APPOINTMENT_END_HOUR 16
-#define APPOINTMENT_INTERVAL 15
+#define APPOINTMENT_START_HOUR 10
+#define APPOINTMENT_END_HOUR 14
+#define APPOINTMENT_INTERVAL 30
 
 //////////////////////////////////////
 // Structures
@@ -178,6 +178,9 @@ int findPatientIndexByPatientNum(int patientNumber,
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
+
+// read date
+void inputDate(struct Date *date);
 
 // Get user input for a new patient record
 void inputPatient(struct Patient *patient);
