@@ -11,3 +11,36 @@ shared with any other student or 3rd party content provider. This
 submitted
 piece of work is entirely of my own creation.
 **************************************************************************
+**************************************************************************
+
+1.
+In order to achieve the objectives this milestone, I created some of the
+additional functions, as they were not provided for me. Three of these
+manually created functions are described below:
+
+a. void inputDate(struct Date *date);
+During the coding phase of this milestone, I encountered that date input is required for multiple sections.
+In order to address this requirement without repeating myself, I extracted logic for date input into a specialized function reads the date and stores the data to the date structure provided as its argument. This function asks the user to input the year, followed by the month and day, and ensures the validity of the entered date. Here, for the month of February (with month value of 2), the maximum allowable day is typically limited to 28, unless it is a leap year, wherein the maximum day is extended to 29. This utility function is utilized both for obtaining date input during appointment searches as well as adding new appointments.
+
+b. void displayFormattedPhone(const char *str);
+Among the utility functions, this particular one serves the distinct purpose of displaying/outputting data, setting it apart from the others in terms of functionality. It takes a string as an argument, with the expectation that it represents a phone number. This function performs two crucial tasks: validating the phone number and displaying it in a specific format, namely "(###)###-####". In cases where a phone number is not provided or an invalid phone number is supplied, the function gracefully defaults to displaying the placeholder "(___)___-____" on the output. Notably, this function is extensively employed in various contexts, ranging from presenting lists in a tabular format to showcasing data in a form format. Its usage significantly contributes to enhancing the visual aesthetics and readability of phone numbers, making them more appealing and attention-grabbing to the users.
+
+
+c. int importPatients(const char *datafile, struct Patient patients[], int max);
+As part of this milestone, the data is saved to a .txt file, which is later read and stored in their respective structure arrays during the initial load of the application. For this operation takes, `importPatients` function is called, which accpets a string as its first argument, which represents the name of the file from which data is to be read. The file is then opened and the data is stored up to the maximum value specified by the third argument. Subsequently, an integer value is returned, representing the total number of stored data, which is then displayed as information to indicate how many data entries are available upon application startup.
+
+There is a similar function called importAppointments that performs the same operation. However, it reads data from a different file named appointmentData.txt, where each field is separated by a comma (","). In contrast, the first function reads data from a file named patientData.txt, where fields are separated by a vertical bar ("|"). Both functions facilitate the process of importing data from external files into the application, enabling efficient data management and retrieval.
+
+**************************************************************************
+**************************************************************************
+
+2. By using these utility functions, I can avoid duplicating code for input validation across multiple places in my code. For example, the inputCharOption function takes a list of valid characters and validates the user's input against the provided valid characters. It keeps showing error messages and asks the user to enter again until a valid character is inputted. These basic utility functions are also used in other utility functions, such as inputDate(struct Date *date). Another reason for not using pure scanf() functions is that even when specifying the format for input to be read, sometimes the data read from the user can be invalid, which can lead to crashes in the application. By using input utility functions that validate input and ensure it matches the expected format, I can prevent such crashes during runtime.
+By utilizing these input utility functions, I can ensure that input from users is validated and matches the expected format, thus enhancing the stability of the application.
+
+
+**************************************************************************
+**************************************************************************
+
+3. In the functions pointed on no.1, only the core modules and functions provided by the c library
+are used. No other third party modules are used. Even on core modules, only the standard `stdlib.h`
+is used.
