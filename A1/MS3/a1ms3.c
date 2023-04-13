@@ -32,5 +32,7 @@ int main(void) {
 
   menuMain(&data);
 
+  printf("Script started on Sun 03 Apr 2022 10:49:08 PM EDT\n");
+
   return 0;
 }
