@@ -188,11 +188,10 @@ void menuPatientEdit(struct Patient *patient) {
     if (selection == 1) {
       printf("Name  : ");
       inputCString(patient->name, 1, NAME_LEN);
-      putchar('\n');
-      printf("Patient record updated!\n\n");
+      printf("\nPatient record updated!\n\n");
     } else if (selection == 2) {
       inputPhoneData(&patient->phone);
-      printf("Patient record updated!\n\n");
+      printf("\nPatient record updated!\n\n");
     }
 
   } while (selection);
