@@ -342,7 +342,7 @@ void removePatient(struct Patient patient[], int max) {
     printf("ERROR: Patient record not found!\n\n");
   } else {
     displayPatientData(&patient[index], FMT_FORM);
-    printf("Are you sure you want to remove this patient record? (y/n): ");
+    printf("\nAre you sure you want to remove this patient record? (y/n): ");
     selection = inputCharOption("yn");
 
     if (selection == 'y') {
@@ -468,7 +468,7 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
                        struct Patient *patient, int maxPatients) {
   char selection;
   struct Date date;
-  struct Appointment a = {0};
+  struct Appointment empty = {0};
   int patientNumber, index, i;
   printf("Patient Number: ");
   patientNumber = inputInt();
@@ -488,7 +488,7 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
         printf("Are you sure you want to remove this appointment (y,n): ");
         selection = inputCharOption("yn");
         if (selection == 'y') {
-          appoint[i] = a;
+          appoint[i] = empty;
           printf("\nAppointment record has been removed!\n\n");
         } else {
           printf("Operation aborted.\n\n");
