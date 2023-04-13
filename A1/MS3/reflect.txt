@@ -42,5 +42,11 @@ By utilizing these input utility functions, I can ensure that input from users i
 **************************************************************************
 
 3. In the functions pointed on no.1, only the core modules and functions provided by the c library
-are used. No other third party modules are used. Even on core modules, only the standard `stdlib.h`
-is used.
+are used. No other third party modules are used. Even on core modules, only the standard(stdlib) and
+string library are used. The standard library provides the standard i/o functions which are used within
+utility functions for taking input from users. Another module used from stdlib.h is fopen() and fscan()
+for opening/reading the file and scanning the content of the file which are then used to load the data
+on the application on initial start. From string library, strcpy and strcmp libraries are used for copying
+the string or assigning the value and for comparing the two strings (ie. phone numbers).
+Desipte these libraries/modules, no other modules were required and I was able to achieve all my requirements
+from these used modules.
