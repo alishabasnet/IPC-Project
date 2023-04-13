@@ -385,7 +385,7 @@ void viewAppointmentSchedule(struct ClinicData *data) {
     if (data->appointments[i].date.year == date.year &&
         data->appointments[i].date.month == date.month &&
         data->appointments[i].date.day == date.day) {
-      displayScheduleData(&data->patients[i], &data->appointments[i], 1);
+      displayScheduleData(&data->patients[i], &data->appointments[i], 0);
     }
   }
 
