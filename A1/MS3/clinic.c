@@ -359,13 +359,15 @@ void removePatient(struct Patient patient[], int max) {
 
 // View ALL scheduled appointments
 void viewAllAppointments(struct ClinicData *data) {
-  int i;
+  int i, index;
   const struct Date date;
   displayScheduleTableHeader(&date, 1);
 
   for (i = 0; i < data->maxAppointments; i++) {
     if (data->appointments[i].date.year != 0) {
-      displayScheduleData(&data->patients[i], &data->appointments[i], 1);
+      index = findPatientIndexByPatientNum(data->appointments[i].patientNumber,
+                                           data->patients, data->maxPatient);
+      displayScheduleData(&data->patients[index], &data->appointments[i], 1);
     }
   }
   putchar('\n');
@@ -373,19 +375,19 @@ void viewAllAppointments(struct ClinicData *data) {
 
 // View appointment schedule for the user input date
 void viewAppointmentSchedule(struct ClinicData *data) {
-  int i;
+  int i = 0, index;
   struct Date date;
 
   inputDate(&date);
   putchar('\n');
-  
+
   displayScheduleTableHeader(&date, 0);
 
   for (i = 0; i < data->maxAppointments; i++) {
-    if (data->appointments[i].date.year == date.year &&
-        data->appointments[i].date.month == date.month &&
-        data->appointments[i].date.day == date.day) {
-      displayScheduleData(&data->patients[i], &data->appointments[i], 0);
+    if (compareDates(data->appointments[i].date, date) == 0) {
+      index = findPatientIndexByPatientNum(data->appointments[i].patientNumber,
+                                           data->patients, data->maxPatient);
+      displayScheduleData(&data->patients[index], &data->appointments[i], 0);
     }
   }
 
@@ -412,14 +414,14 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
 
   while (loop) {
 
-    if(readDate == 1) {
+    if (readDate == 1) {
       inputDate(&date);
       readDate = 0;
     }
 
-    printf("Hour (0-23)   : ");
+    printf("Hour (0-23)  : ");
     time.hour = inputIntRange(0, 23);
-    printf("Minute (0-59 ): ");
+    printf("Minute (0-59): ");
     time.min = inputIntRange(0, 59);
 
     if (((float)(time.hour) + (float)(time.min) / 60) <
@@ -459,6 +461,9 @@ void addAppointment(struct Appointment *appoint, int maxAppointments,
   appoint[i].time = time;
   appoint[i].patientNumber = patientNumber;
 
+  // re-sort appointment on every addition
+  sortAppointments(appoint, maxAppointments);
+
   printf("\n*** Appointment scheduled! ***\n\n");
 }
 
@@ -480,7 +485,9 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
     putchar('\n');
 
     for (i = 0; i < maxAppointments; i++) {
-      if (appoint[i].date.year == date.year &&
+      if (
+        appoint[i].patientNumber == patientNumber &&
+        appoint[i].date.year == date.year &&
           appoint[i].date.month == date.month &&
           appoint[i].date.day == date.day) {
         displayPatientData(&patient[index], FMT_FORM);
@@ -488,6 +495,8 @@ void removeAppointment(struct Appointment *appoint, int maxAppointments,
         selection = inputCharOption("yn");
         if (selection == 'y') {
           appoint[i] = empty;
+          // re-sort eveytime when appointment is deleted
+          sortAppointments(appoint, maxAppointments);
           printf("\nAppointment record has been removed!\n\n");
         } else {
           printf("Operation aborted.\n\n");
@@ -581,11 +590,11 @@ int findPatientIndexByPatientNum(int patientNumber,
 
 // utility to read phone number
 void inputPhoneNumber(char source[PHONE_LEN]) {
-  while(1) {
+  while (1) {
     scanf("%s", source);
-    if(strlen(source) != PHONE_LEN) {
-     printf("Invalid %d-digit number! Number: ", PHONE_LEN);
-     continue;  
+    if (strlen(source) != PHONE_LEN) {
+      printf("Invalid %d-digit number! Number: ", PHONE_LEN);
+      continue;
     } else {
       break;
     }
@@ -716,5 +725,53 @@ int importAppointments(const char *datafile, struct Appointment appoints[],
   }
 
   fclose(fp);
+
+  sortAppointments(appoints, max);
   return count;
+}
+
+int compareDates(const struct Date d1, const struct Date d2) {
+
+  if (d1.year != d2.year) {
+    return d1.year < d2.year ? -1 : 1;
+  }
+
+  if (d1.month != d2.month) {
+    return d1.month < d2.month ? -1 : 1;
+  }
+
+  if (d1.day != d2.day) {
+    return d1.day < d2.day ? -1 : 1;
+  }
+
+  return 0;
+}
+
+int compareTimes(const struct Time t1, const struct Time t2) {
+  int s1 = t1.hour * 60 + t1.min;
+  int s2 = t2.hour * 60 + t2.min;
+  return s1 == s2 ? 0 : s1 < s2 ? -1 : 1;
+}
+
+// bubble sorting
+void sortAppointments(struct Appointment appoint[], int max) {
+  int i, j, diff;
+  struct Appointment temp;
+
+  for (i = 0; i < max - 1; i++) {
+    for (j = 0; j < max - i - 1; j++) {
+      if (appoint[j].date.year == 0 || appoint[j + 1].date.year == 0)
+        continue;
+
+      diff = compareDates(appoint[j].date, appoint[j + 1].date);
+      if (diff == 0)
+        diff = compareTimes(appoint[j].time, appoint[j + 1].time);
+
+      if (diff == 1) {
+        temp = appoint[j];
+        appoint[j] = appoint[j + 1];
+        appoint[j + 1] = temp;
+      }
+    }
+  }
 }

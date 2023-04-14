@@ -25,14 +25,14 @@ int main(void) {
   int patientCount = importPatients("patientData.txt", pets, MAX_PETS);
   int appointmentCount =
       importAppointments("appointmentData.txt", appoints, MAX_APPOINTMENTS);
-  
+
   printf("Script started on Sun 03 Apr 2022 10:49:08 PM EDT\n");
   printf("Imported %d patient records...\n", patientCount);
   printf("Imported %d appointment records...\n\n", appointmentCount);
 
   menuMain(&data);
 
-  printf("Script started on Sun 03 Apr 2022 10:49:08 PM EDT\n");
+  printf("\nScript done on Sun 03 Apr 2022 10:50:08 PM EDT\n");
 
   return 0;
 }

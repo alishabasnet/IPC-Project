@@ -175,6 +175,10 @@ int nextPatientNumber(const struct Patient patient[], int max);
 int findPatientIndexByPatientNum(int patientNumber,
                                  const struct Patient patient[], int max);
 
+int compareDates(const struct Date d1, const struct Date d2);
+int compareTimes(const struct Time t1, const struct Time t2);
+
+void sortAppointments(struct Appointment appoint[], int max);
 //////////////////////////////////////
 // USER INPUT FUNCTIONS
 //////////////////////////////////////
